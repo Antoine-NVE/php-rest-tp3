@@ -3,10 +3,13 @@
 namespace api;
 
 use Exception;
-use modele\dao\Api;
 use modele\dao\ProduitDao;
+use modele\dao\TokenDao;
+use modele\dao\UtilisateurDao;
 use PDOException;
 use OpenApi\Annotations as OA;
+use services\CookieService;
+use services\JwtService;
 
 /**
  * @OA\Get(
@@ -65,14 +68,26 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    if (!isset($_COOKIE['auth_token'])) {
-        throw new Exception('Vous n\'êtes pas connecté', 401);
-    }
-
     // On vérifie la méthode utilisée
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         throw new Exception('Méthode non autorisée', 405);
     }
+
+    // On récupère le token stocké dans les cookies
+    $cookieService = new CookieService();
+    $token = $cookieService->getAuthToken();
+
+    // On vérifie que le token est valide
+    $jwtService = new JwtService();
+    $userId = $jwtService->verifyAuthToken($token);
+
+    // On récupère les informations de l'utilisateur
+    $utilisateurDao = new UtilisateurDao();
+    $utilisateur = $utilisateurDao->read($userId);
+
+    // On vérifie le token en BDD
+    $tokenDao = new TokenDao();
+    $tokenDao->verify($token, $utilisateur);
 
     // On lit les produits depuis la BDD
     $produitDao = new ProduitDao();

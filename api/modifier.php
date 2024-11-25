@@ -5,9 +5,13 @@ namespace api;
 use DateTime;
 use Exception;
 use modele\dao\ProduitDao;
+use modele\dao\TokenDao;
+use modele\dao\UtilisateurDao;
 use modele\entites\Produit;
 use PDOException;
 use OpenApi\Annotations as OA;
+use services\CookieService;
+use services\JwtService;
 
 /**
  * @OA\Put(
@@ -61,6 +65,7 @@ use OpenApi\Annotations as OA;
  */
 
 require_once '../Autoloader.php';
+require_once '../vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -78,6 +83,22 @@ try {
     if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
         throw new Exception('Méthode non autorisée', 405);
     }
+
+    // On récupère le token stocké dans les cookies
+    $cookieService = new CookieService();
+    $token = $cookieService->getAuthToken();
+
+    // On vérifie que le token est valide
+    $jwtService = new JwtService();
+    $userId = $jwtService->verifyAuthToken($token);
+
+    // On récupère les informations de l'utilisateur
+    $utilisateurDao = new UtilisateurDao();
+    $utilisateur = $utilisateurDao->read($userId);
+
+    // On vérifie le token en BDD
+    $tokenDao = new TokenDao();
+    $tokenDao->verify($token, $utilisateur);
 
     // On récupère les données du body
     $jsonInput = file_get_contents("php://input");

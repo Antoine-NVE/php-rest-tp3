@@ -3,10 +3,12 @@
 namespace api;
 
 use Exception;
-use modele\Api;
+use modele\dao\TokenDao;
 use modele\dao\UtilisateurDao;
 use modele\entites\Utilisateur;
 use PDOException;
+use services\CookieService;
+use services\JwtService;
 
 require_once '../Autoloader.php';
 require_once '../vendor/autoload.php';
@@ -35,16 +37,29 @@ try {
         throw new Exception('Le mot de passe est requis et doit être une chaîne non vide', 400);
     }
 
+    // On crée un utilisateur
     $utilisateur = new Utilisateur();
     $utilisateur->setEmail($data->email);
     $utilisateur->setPassword($data->password);
 
-    // On l'insère en BDD
+    // On vérifie les identifiants
     $utilisateurDao = new UtilisateurDao();
     $utilisateur = $utilisateurDao->login($utilisateur);
 
+    // On vient générer un token
+    $jwtService = new JwtService();
+    $token = $jwtService->generateAuthToken($utilisateur);
+
+    // On vient l'insérer dans les cookies
+    $cookieService = new CookieService();
+    $cookieService->setAuthToken($token);
+
+    // On vient l'insérer en base
+    $tokenDao = new TokenDao();
+    $tokenDao->insert($token, $utilisateur);
+
     http_response_code(201);
-    echo json_encode(['Message' => 'Identifiants corrects']);
+    echo json_encode(['message' => 'Connecté en tant que ' . $utilisateur->getEmail()]);
 } catch (PDOException $e) {
     // On met un code d'erreur 500 par défaut
     http_response_code($e->getCode() !== 0 ? $e->getCode() : 500);

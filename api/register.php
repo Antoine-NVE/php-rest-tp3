@@ -9,6 +9,7 @@ use modele\entites\Utilisateur;
 use PDOException;
 
 require_once '../Autoloader.php';
+require_once '../vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -48,7 +49,7 @@ try {
 
     // On l'insère en BDD
     $utilisateurDao = new UtilisateurDao();
-    $utilisateurDao->register($utilisateur);
+    $utilisateur = $utilisateurDao->register($utilisateur);
 
     http_response_code(201);
     echo json_encode(['Utilisateur enregistré']);

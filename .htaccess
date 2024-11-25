@@ -7,4 +7,8 @@ RewriteRule ^api/v1.0/produit/delete/?$ api/supprimer.php
 RewriteRule ^api/v1.0/produit/delete/([0-9]+)/?$ api/supprimer.php?id=$1
 RewriteRule ^api/v1.0/produit/listone/?$ api/lire_un.php
 RewriteRule ^api/v1.0/produit/listone/([0-9]+)/?$ api/lire_un.php?id=$1
+
+RewriteRule ^api/v1.0/register/?$ api/register.php
+RewriteRule ^api/v1.0/login/?$ api/login.php
+RewriteRule ^api/v1.0/logout/?$ api/logout.php
 Header set Access-Control-Allow-Origin *
