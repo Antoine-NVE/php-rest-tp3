@@ -3,6 +3,7 @@
 namespace api;
 
 use Exception;
+use modele\dao\Api;
 use modele\dao\ProduitDao;
 use PDOException;
 use OpenApi\Annotations as OA;
@@ -55,6 +56,7 @@ use OpenApi\Annotations as OA;
  */
 
 require_once '../Autoloader.php';
+require_once '../vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -63,6 +65,10 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+    if (!isset($_COOKIE['auth_token'])) {
+        throw new Exception('Vous n\'êtes pas connecté', 401);
+    }
+
     // On vérifie la méthode utilisée
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         throw new Exception('Méthode non autorisée', 405);

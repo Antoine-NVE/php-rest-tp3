@@ -18,7 +18,53 @@
     <body class="bg-body-secondary">
         <div class="container my-3">
             <h1 class="text-center">Utilisation API REST</h1>
+
+            <form id="registerForm" class="bg-white p-3 rounded">
+                <h2>Inscription</h2>
+                <div class="mb-3">
+                    <label for="registerLastname" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="registerLastname" />
+                </div>
+                <div class="mb-3">
+                    <label for="registerFirstname" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" id="registerFirstname" />
+                </div>
+                <div class="mb-3">
+                    <label for="registerEmail" class="form-label">Adresse email</label>
+                    <input type="email" class="form-control" id="registerEmail" />
+                </div>
+                <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="registerPassword" />
+                </div>
+                <div id="loginDisplay"></div>
+                <button type="button" class="btn btn-outline-success d-block ms-auto">Inscription</button>
+            </form>
+
+            <br />
+            <hr />
+            <br />
+
+            <form id="loginForm" class="bg-white p-3 rounded">
+                <h2>Connexion</h2>
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Adresse email</label>
+                    <input type="email" class="form-control" id="loginEmail" />
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="loginPassword" />
+                </div>
+                <div id="loginDisplay"></div>
+                <button type="button" class="btn btn-outline-success d-block ms-auto">Connexion</button>
+            </form>
+
+            <br />
+            <hr />
+            <br />
+
             <form id="createForm" class="bg-white p-3 rounded">
+                <h2>Création</h2>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="createName" placeholder="Nom" />
                     <label for="createName" class="form-label">Nom</label>
@@ -35,7 +81,7 @@
                     <input type="datetime-local" class="form-control" id="createCreationDate" placeholder="Date de création" />
                     <label for="createCreationDate" class="form-label" aria-describedby="createCreationDateHelp">Date de création</label>
                 </div>
-                <div id="createDisplay" class="mb-3"></div>
+                <div id="createDisplay"></div>
                 <button type="submit" class="btn btn-success btn-sm d-block ms-auto">Créer un produit</button>
             </form>
 
@@ -44,6 +90,7 @@
             <br />
 
             <form id="readAllForm" class="bg-white p-3 rounded">
+                <h2>Lire tous</h2>
                 <div id="readAllDisplay" class="d-flex flex-wrap"></div>
                 <button type="submit" class="btn btn-primary btn-sm d-block ms-auto">Récupérer tous les produits</button>
             </form>
@@ -53,6 +100,7 @@
             <br />
 
             <form id="readOneForm" class="bg-white p-3 rounded">
+                <h2>Lire un</h2>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="readOneId" placeholder="ID" />
                     <label for="readOneId" class="form-label">ID</label>
@@ -66,6 +114,7 @@
             <br />
 
             <form id="updateForm" class="bg-white p-3 rounded">
+                <h2>Modifier</h2>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="updateId" placeholder="ID" />
                     <label for="updateId" class="form-label">ID</label>
@@ -95,6 +144,7 @@
             <br />
 
             <form id="deleteForm" class="bg-white p-3 rounded">
+                <h2>Supprimer</h2>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="deleteId" placeholder="ID" />
                     <label for="deleteId" class="form-label">ID</label>
