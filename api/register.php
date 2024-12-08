@@ -52,7 +52,7 @@ try {
     $utilisateur = $utilisateurDao->register($utilisateur);
 
     http_response_code(201);
-    echo json_encode(['Utilisateur enregistré']);
+    echo json_encode(['message' => 'Utilisateur enregistré, vous pouvez désormais vous connecter']);
 } catch (PDOException $e) {
     // On met un code d'erreur 500 par défaut
     http_response_code($e->getCode() !== 0 ? $e->getCode() : 500);

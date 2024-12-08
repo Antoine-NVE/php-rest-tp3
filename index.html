@@ -37,8 +37,8 @@
                     <label for="registerPassword" class="form-label">Mot de passe</label>
                     <input type="password" class="form-control" id="registerPassword" />
                 </div>
-                <div id="loginDisplay"></div>
-                <button type="button" class="btn btn-outline-success d-block ms-auto">Inscription</button>
+                <div id="registerDisplay"></div>
+                <button id="registerButton" type="submit" class="btn btn-outline-success d-block ms-auto">Inscription</button>
             </form>
 
             <br />
@@ -56,7 +56,17 @@
                     <input type="password" class="form-control" id="loginPassword" />
                 </div>
                 <div id="loginDisplay"></div>
-                <button type="button" class="btn btn-outline-success d-block ms-auto">Connexion</button>
+                <button type="submit" class="btn btn-outline-success d-block ms-auto">Connexion</button>
+            </form>
+
+            <br />
+            <hr />
+            <br />
+
+            <form id="logoutForm" class="bg-white p-3 rounded">
+                <h2>Déconnexion</h2>
+                <div id="logoutDisplay"></div>
+                <button type="submit" class="btn btn-outline-primary d-block ms-auto">Déconnexion</button>
             </form>
 
             <br />

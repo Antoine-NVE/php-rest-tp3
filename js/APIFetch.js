@@ -1,3 +1,58 @@
+// Enregistre un utilisateur
+async function register(lastname, firstname, email, password) {
+    try {
+        const response = await fetch('./api/v1.0/auth/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                lastname: lastname,
+                firstname: firstname,
+                email: email,
+                password: password,
+            }),
+        });
+
+        const data = await response.json();
+
+        return [response, data];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+// Connecte un utilisateur
+async function login(email, password) {
+    try {
+        const response = await fetch('./api/v1.0/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        });
+
+        const data = await response.json();
+
+        return [response, data];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+// Déconnecte un utilisateur
+async function logout() {
+    try {
+        const response = await fetch('./api/v1.0/auth/logout', {
+            method: 'GET',
+        });
+
+        const data = await response.json();
+
+        return [response, data];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 // Crée un produit
 async function createProduit(name, description, price, creationDate) {
     try {
@@ -25,8 +80,6 @@ async function getProduits() {
         const response = await fetch('./api/v1.0/produit/list', {
             method: 'GET',
         });
-
-        console.log(response);
 
         const data = await response.json();
 
@@ -125,6 +178,72 @@ function displayMessage(place, color, message) {
     place.style.color = color;
     place.innerText = message;
 }
+
+// Enregistrement
+const registerForm = document.getElementById('registerForm');
+const registerLastname = document.getElementById('registerLastname');
+const registerFirstname = document.getElementById('registerFirstname');
+const registerEmail = document.getElementById('registerEmail');
+const registerPassword = document.getElementById('registerPassword');
+const registerDisplay = document.getElementById('registerDisplay');
+
+registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    try {
+        const [response, data] = await register(registerLastname.value, registerFirstname.value, registerEmail.value, registerPassword.value);
+
+        if (response.ok) {
+            displayMessage(registerDisplay, 'green', data.message);
+        } else {
+            displayMessage(registerDisplay, 'red', data.message);
+        }
+    } catch (error) {
+        displayMessage(registerDisplay, 'red', error);
+    }
+});
+
+// Connexion
+const loginForm = document.getElementById('loginForm');
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+const loginDisplay = document.getElementById('loginDisplay');
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    try {
+        const [response, data] = await login(loginEmail.value, loginPassword.value);
+
+        if (response.ok) {
+            displayMessage(loginDisplay, 'green', data.message);
+        } else {
+            displayMessage(loginDisplay, 'red', data.message);
+        }
+    } catch (error) {
+        displayMessage(loginDisplay, 'red', error);
+    }
+});
+
+// Déconnexion
+const logoutForm = document.getElementById('logoutForm');
+const logoutDisplay = document.getElementById('logoutDisplay');
+
+logoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    try {
+        const [response, data] = await logout();
+
+        if (response.ok) {
+            displayMessage(logoutDisplay, 'green', data.message);
+        } else {
+            displayMessage(logoutDisplay, 'red', data.message);
+        }
+    } catch (error) {
+        displayMessage(logoutDisplay, 'red', error);
+    }
+});
 
 // Création
 const createForm = document.getElementById('createForm');
