@@ -31,15 +31,11 @@ try {
 
     // On vérifie le token
     $jwtService = new JwtService();
-    $userId = $jwtService->verifyAuthToken($token);
-
-    // On récupère l'utilisateur
-    $utilisateurDao = new UtilisateurDao();
-    $user = $utilisateurDao->read($userId);
+    $utilisateur = $jwtService->verifyAuthToken($token);
 
     // On rend inactif le token en BDD
     $tokenDao = new TokenDao();
-    $tokenDao->setInactive($token, $user);
+    $tokenDao->setInactive($token, $utilisateur);
 
     http_response_code(200);
     echo json_encode(['message' => 'Déconnecté']);

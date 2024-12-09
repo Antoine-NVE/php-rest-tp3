@@ -79,11 +79,7 @@ try {
 
     // On vérifie que le token est valide
     $jwtService = new JwtService();
-    $userId = $jwtService->verifyAuthToken($token);
-
-    // On récupère les informations de l'utilisateur
-    $utilisateurDao = new UtilisateurDao();
-    $utilisateur = $utilisateurDao->read($userId);
+    $utilisateur = $jwtService->verifyAuthToken($token);
 
     // On vérifie le token en BDD
     $tokenDao = new TokenDao();

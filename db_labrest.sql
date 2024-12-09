@@ -47,7 +47,7 @@ CREATE TABLE `t_token` (
   `date_expiration` datetime NOT NULL,
   `actif` tinyint(1) NOT NULL,
   `domaine` varchar(255) NOT NULL,
-  `t_utilisateur_id` int(11) NOT NULL
+  `utilisateur_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,7 +79,7 @@ ALTER TABLE `t_produit`
 --
 ALTER TABLE `t_token`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `t_utilisateur_id` (`t_utilisateur_id`);
+  ADD KEY `utilisateur_id` (`utilisateur_id`);
 
 --
 -- Index pour la table `t_utilisateur`
@@ -118,7 +118,7 @@ ALTER TABLE `t_utilisateur`
 -- Contraintes pour la table `t_token`
 --
 ALTER TABLE `t_token`
-  ADD CONSTRAINT `t_token_ibfk_1` FOREIGN KEY (`t_utilisateur_id`) REFERENCES `t_utilisateur` (`id`);
+  ADD CONSTRAINT `t_token_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `t_utilisateur` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -56,7 +56,7 @@ try {
 
     // On vient l'insérer en base
     $tokenDao = new TokenDao();
-    $tokenDao->insert($token, $utilisateur);
+    $tokenDao->insert($token);
 
     http_response_code(201);
     echo json_encode(['message' => 'Connecté en tant que ' . $utilisateur->getEmail()]);

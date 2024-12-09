@@ -3,6 +3,7 @@
 namespace services;
 
 use Exception;
+use modele\entites\Token;
 
 class CookieService
 {
@@ -16,7 +17,7 @@ class CookieService
     public function __construct() {}
 
     // On définit le cookie auth_token
-    public function setAuthToken(string $token): void
+    public function setAuthToken(Token $token): void
     {
         $options = [
             'expires' => time() + $this->expires,
@@ -27,17 +28,20 @@ class CookieService
             'samesite' => $this->samesite
         ];
 
-        setcookie('auth_token', $token, $options);
+        setcookie('auth_token', $token->getToken(), $options);
     }
 
     // On récupère le cookie auth_token
-    public function getAuthToken(): string
+    public function getAuthToken(): Token
     {
         if (!isset($_COOKIE['auth_token'])) {
             throw new Exception('Non connecté', 401);
         }
 
-        return $_COOKIE['auth_token'];
+        $token = new Token();
+        $token->setToken($_COOKIE['auth_token']);
+
+        return $token;
     }
 
     // On supprime le cookie auth_token
