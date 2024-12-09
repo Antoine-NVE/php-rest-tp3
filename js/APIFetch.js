@@ -1,4 +1,4 @@
-// Enregistre un utilisateur
+// Inscrit un utilisateur
 async function register(lastname, firstname, email, password) {
     try {
         const response = await fetch('./api/v1.0/auth/register', {
@@ -179,7 +179,7 @@ function displayMessage(place, color, message) {
     place.innerText = message;
 }
 
-// Enregistrement
+// Inscription
 const registerForm = document.getElementById('registerForm');
 const registerLastname = document.getElementById('registerLastname');
 const registerFirstname = document.getElementById('registerFirstname');

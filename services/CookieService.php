@@ -7,7 +7,7 @@ use Exception;
 class CookieService
 {
     private int $expires = 3600; // 1 heure
-    private string $path = '/'; // Mettre '/php-rest-tp3' pour plus de sécurité
+    private string $path = '/';
     private string $domain = 'localhost';
     private bool $secure = true;
     private bool $httponly = true;
@@ -15,6 +15,7 @@ class CookieService
 
     public function __construct() {}
 
+    // On définit le cookie auth_token
     public function setAuthToken(string $token): void
     {
         $options = [
@@ -29,6 +30,7 @@ class CookieService
         setcookie('auth_token', $token, $options);
     }
 
+    // On récupère le cookie auth_token
     public function getAuthToken(): string
     {
         if (!isset($_COOKIE['auth_token'])) {
@@ -38,6 +40,7 @@ class CookieService
         return $_COOKIE['auth_token'];
     }
 
+    // On supprime le cookie auth_token
     public function unsetAuthToken(): void
     {
         $options = [

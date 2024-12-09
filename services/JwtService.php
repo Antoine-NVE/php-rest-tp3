@@ -13,6 +13,7 @@ class JwtService
 
     public function __construct() {}
 
+    // On génère un token JWT
     public function generateAuthToken(Utilisateur $utilisateur): string
     {
         try {
@@ -27,6 +28,7 @@ class JwtService
         }
     }
 
+    // On vérifie un token JWT
     public function verifyAuthToken($token): int
     {
         try {
